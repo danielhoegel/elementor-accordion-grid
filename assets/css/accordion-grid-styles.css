@@ -1,0 +1,103 @@
+.accordion-grid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  position: relative;
+  margin: -0.5rem;
+}
+
+.accordion-grid, .accordion-grid * {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.accordion-grid__tab {
+  margin: 0;
+  padding: 0.5rem;
+  width: 100%;
+  width: calc(100% / 4);
+  overflow: hidden;
+  -webkit-transition: 300ms all ease;
+  transition: 300ms all ease;
+}
+
+.accordion-grid__tab__preview__inside {
+  background-color: #fff;
+  color: #004064;
+  padding: 2rem;
+  text-align: center;
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  position: relative;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.accordion-grid__tab__preview__inside:after {
+  content: '';
+  display: none;
+  width: 0;
+  height: 0;
+  border: 0.5rem solid transparent;
+  border-bottom-color: #839750;
+  position: absolute;
+  bottom: -1rem;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+
+.accordion-grid__tab.active .accordion-grid__tab__preview__inside {
+  color: #839750;
+}
+
+.accordion-grid__tab.active .accordion-grid__tab__preview__inside:after {
+  display: block;
+}
+
+.accordion-grid__tab__content {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  overflow: hidden;
+  height: 0;
+  -webkit-transition: 300ms all ease;
+  transition: 300ms all ease;
+}
+
+.accordion-grid__tab__content__inside {
+  background-color: #fff;
+  padding: 1rem;
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 1rem 0.5rem 0.5rem;
+  border-top: 2px solid #839750;
+}
+
+.accordion-grid__tab__icon {
+  margin-bottom: 1rem;
+  font-size: 4rem;
+  line-height: 1;
+}
+
+.accordion-grid__tab__title {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1;
+}

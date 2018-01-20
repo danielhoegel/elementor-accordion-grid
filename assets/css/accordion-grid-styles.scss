@@ -1,0 +1,96 @@
+.accordion-grid {
+    $gap: 0.5rem;
+    $duration: 300ms;
+    $columns: 4;
+    $primary: #004064;
+    $accent: #839750;
+
+    &, & * {
+        box-sizing: border-box;
+    }
+
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    margin: -1 * $gap;
+
+    &__tab {    
+        margin: 0;
+        padding: $gap;
+        width: 100%;
+        width: calc(100% / #{$columns});
+        overflow: hidden;
+        transition: $duration all ease;
+
+        &__preview {
+            // height: 100%;
+
+            &__inside {
+                background-color: #fff;
+                color: $primary;
+                padding: 2rem;
+                text-align: center;
+                box-shadow: 0 2px 4px rgba(#000, 0.1);
+                cursor: pointer;
+                position: relative;
+                user-select: none;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                &:after {
+                    content: '';
+                    display: none;
+                    width: 0;
+                    height: 0;
+                    border: 0.5rem solid transparent;
+                    border-bottom-color: $accent;
+                    position: absolute;
+                    bottom: -1rem;
+                    left: 50%;
+                    transform: translateX(-50%);
+                }
+
+                .accordion-grid__tab.active & {
+                    color: $accent;
+                    &:after { display: block; }
+                }
+            }
+        }
+
+        &__content {
+            width: 100%;
+            position: absolute;
+            left: 0;
+            overflow: hidden;
+            height: 0;
+            transition: $duration all ease;
+
+
+            // temp active
+            // position: relative;
+            // height: auto;
+            
+            &__inside {
+                background-color: #fff;
+                padding: 1rem;
+                box-shadow: 0 2px 4px rgba(#000, 0.1);
+                margin: 2*$gap $gap $gap;
+                border-top: 2px solid $accent;
+            }
+        }
+
+        &__icon {
+            margin-bottom: 1rem;
+            font-size: 4rem;
+            line-height: 1;
+        }
+
+        &__title {
+            margin: 0;
+            font-size: 1.25rem;
+            line-height: 1;
+        }
+    }
+}
