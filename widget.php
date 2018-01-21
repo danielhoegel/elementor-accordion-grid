@@ -75,34 +75,6 @@ class Widget_Elementor_Accordion_Grid extends Widget_Base {
 			]
         );
         
-        $this->add_control(
-			'view',
-			[
-				'label' => __( 'View', 'elementor' ),
-				'type' => Controls_Manager::HIDDEN,
-				'default' => 'traditional',
-			]
-		);
-
-		$this->add_control(
-			'title_html_tag',
-			[
-				'label' => __( 'Title HTML Tag', 'elementor' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'h1' => 'H1',
-					'h2' => 'H2',
-					'h3' => 'H3',
-					'h4' => 'H4',
-					'h5' => 'H5',
-					'h6' => 'H6',
-					'div' => 'div',
-				],
-				'default' => 'div',
-				'separator' => 'before',
-			]
-		);
-
 		$this->end_controls_section();
 
    }
