@@ -58,6 +58,8 @@
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  -webkit-transition: color 0.1s ease;
+  transition: color 0.1s ease;
 }
 
 .accordion-grid__tab__preview__inside:after {
@@ -72,6 +74,10 @@
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
+}
+
+.accordion-grid__tab__preview__inside:hover {
+  color: #839750;
 }
 
 .accordion-grid__tab.active .accordion-grid__tab__preview__inside {
@@ -115,5 +121,5 @@
   margin: 0;
   font-size: 1.25rem;
   line-height: 1;
-  min-height: calc(3 * 1.25rem);
+  min-height: calc(2 * 1.25rem);
 }

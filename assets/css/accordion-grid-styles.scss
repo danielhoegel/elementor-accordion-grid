@@ -41,6 +41,7 @@
                 cursor: pointer;
                 position: relative;
                 user-select: none;
+                transition: color 0.1s ease;
 
                 &:after {
                     content: '';
@@ -53,6 +54,10 @@
                     bottom: -3 * $gap;
                     left: 50%;
                     transform: translateX(-50%);
+                }
+
+                &:hover {
+                    color: $accent;
                 }
 
                 .accordion-grid__tab.active & {
@@ -74,11 +79,6 @@
                 height: auto;
             }
 
-
-            // temp active
-            // position: relative;
-            // height: auto;
-            
             &__inside {
                 background-color: #fff;
                 padding: 1rem;
@@ -98,7 +98,7 @@
             margin: 0;
             font-size: 1.25rem;
             line-height: 1;
-            min-height: calc(3 * 1.25rem);
+            min-height: calc(2 * 1.25rem);
         }
     }
 }
