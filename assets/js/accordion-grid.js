@@ -13,6 +13,9 @@ jQuery(document).ready(function($){
     for (let i = 0; i < tabPreviews.length; i++) {
         const tabPreview = tabPreviews[i];
         const tab = tabPreview.parentNode;
+        
+        tab.style.height = tab.scrollHeight + 'px';
+
         tabPreview.addEventListener('click', function() { tabClickHandler(tab) });
         tab.addEventListener('on', function() { showTabContent(tab) });
         tab.addEventListener('off', function() { hideTabContent(tab) });
@@ -22,6 +25,8 @@ jQuery(document).ready(function($){
         if (tab.classList.contains('active')) {
             tab.dispatchEvent(new Event('off'));
             tab.classList.remove('active');
+            // hideTabContent(tab);
+
         } else {
             var activeTab = document.querySelector(selectors.activeTab);
             if (activeTab) {
@@ -37,27 +42,16 @@ jQuery(document).ready(function($){
         var content = tab.querySelector(selectors.content);
         var contentHeight = content.scrollHeight;
         var previewHeight = tab.querySelector(selectors.preview).scrollHeight;
-    
-        $(content).animate({
-            height: contentHeight
-        }, duration);
-        $(tab).animate({
-            height:  previewHeight + contentHeight
-        }, duration);
+
+        tab.style.height = (previewHeight + contentHeight) + 'px';
+        content.style.height = contentHeight + 'px';
     }
 
     function hideTabContent(tab) {
         var content = tab.querySelector(selectors.content);
         var previewHeight = tab.querySelector(selectors.preview).scrollHeight;
 
-        $(tab).animate({
-            height: previewHeight
-        }, duration, function() {
-            tab.style.height = 'auto';
-        });
-        $(content).animate({
-            height: 0
-        }, duration
-        );
+        tab.style.height = previewHeight + 'px';
+        content.style.height = 0;
     }
 }); 
