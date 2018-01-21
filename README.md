@@ -1,7 +1,6 @@
-=== Elementor Accordion Grid ===
-Author: Daniel HÃ¶gel (HHC)
-Author URL: https://hhc-duesseldorf.de
+# Elementor Accordion Grid
+Author: Daniel Högel (HHC)<br />
+Author URL: https://hhc-duesseldorf.de<br />
 
-== Description ==
-
+## Description
 Accordion Grid for the [Elementor](https://elementor.com/) PageBuilder
