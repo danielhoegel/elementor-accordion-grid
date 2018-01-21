@@ -1,5 +1,6 @@
 jQuery(document).ready(function($){
 
+    // CONFIG
     var duration = 400;
     var tabSelector = '.accordion-grid__tab';
     var selectors = {
@@ -9,49 +10,61 @@ jQuery(document).ready(function($){
         content: tabSelector + '__content'
     };
 
+    // SETUP TABS
     var tabPreviews = document.querySelectorAll(selectors.preview);
     for (let i = 0; i < tabPreviews.length; i++) {
         const tabPreview = tabPreviews[i];
         const tab = tabPreview.parentNode;
         
+        // set tab default size
         tab.style.height = tab.scrollHeight + 'px';
-
+        // add tab preview click event listener
         tabPreview.addEventListener('click', function() { tabClickHandler(tab) });
-        tab.addEventListener('on', function() { showTabContent(tab) });
-        tab.addEventListener('off', function() { hideTabContent(tab) });
     }
 
+    /**
+     * Delegate the click event
+     * @param {element} tab - clicked accordion-grid__item
+     */
     function tabClickHandler(tab) {
         if (tab.classList.contains('active')) {
-            tab.dispatchEvent(new Event('off'));
-            tab.classList.remove('active');
-            // hideTabContent(tab);
-
+            hideTabContent(tab);
+            
         } else {
-            var activeTab = document.querySelector(selectors.activeTab);
-            if (activeTab) {
-                activeTab.dispatchEvent(new Event('off'));
-                activeTab.classList.remove('active');
-            }
-            tab.classList.add('active');
-            tab.dispatchEvent(new Event('on'));
+            hideTabContent(document.querySelector(selectors.activeTab));
+            showTabContent(tab);
         }
     }
 
+    /**
+     * Show the content of the clicked tab
+     * @param {element} tab - clicked accordion-grid__item
+     */
     function showTabContent(tab) {
-        var content = tab.querySelector(selectors.content);
-        var contentHeight = content.scrollHeight;
-        var previewHeight = tab.querySelector(selectors.preview).scrollHeight;
-
-        tab.style.height = (previewHeight + contentHeight) + 'px';
-        content.style.height = contentHeight + 'px';
+        if (tab) {
+            tab.classList.add('active');
+            var content = tab.querySelector(selectors.content);
+            var contentHeight = content.scrollHeight;
+            var previewHeight = tab.querySelector(selectors.preview).scrollHeight;
+    
+            tab.style.height = (previewHeight + contentHeight) + 'px';
+            content.style.height = contentHeight + 'px';
+        }
     }
 
+    /**
+     * Hie the content of the clicked tab
+     * @param {element} tab - clicked accordion-grid__item
+     */
     function hideTabContent(tab) {
-        var content = tab.querySelector(selectors.content);
-        var previewHeight = tab.querySelector(selectors.preview).scrollHeight;
-
-        tab.style.height = previewHeight + 'px';
-        content.style.height = 0;
+        if (tab) {
+            tab.classList.remove('active');
+    
+            var content = tab.querySelector(selectors.content);
+            var previewHeight = tab.querySelector(selectors.preview).scrollHeight;
+    
+            tab.style.height = previewHeight + 'px';
+            content.style.height = 0;
+        }
     }
 }); 
