@@ -9,56 +9,55 @@ jQuery(document).ready(function($){
         content: tabSelector + '__content'
     };
 
+    var tabPreviews = document.querySelectorAll(selectors.preview);
+    for (let i = 0; i < tabPreviews.length; i++) {
+        const tabPreview = tabPreviews[i];
+        const tab = tabPreview.parentNode;
+        tabPreview.addEventListener('click', function() { tabClickHandler(tab) });
+        tab.addEventListener('on', function() { showTabContent(tab) });
+        tab.addEventListener('off', function() { hideTabContent(tab) });
+    }
 
-    $(document).on('click', selectors.tab, function() {
-        if (this.classList.contains('active')) {
-            // $(this).trigger('off');
-            this.dispatchEvent(new Event('off'));
-            this.classList.remove('active');
+    function tabClickHandler(tab) {
+        if (tab.classList.contains('active')) {
+            tab.dispatchEvent(new Event('off'));
+            tab.classList.remove('active');
         } else {
-            // $(selectors.activeTab).trigger('off');
             var activeTab = document.querySelector(selectors.activeTab);
             if (activeTab) {
                 activeTab.dispatchEvent(new Event('off'));
-                activeTab.addEventListener('off', function() { hideTabContent(tab) });
                 activeTab.classList.remove('active');
             }
-            this.classList.add('active');
-            this.dispatchEvent(new Event('on'));
-            // $(this).trigger('on');
+            tab.classList.add('active');
+            tab.dispatchEvent(new Event('on'));
         }
+    }
+
+    function showTabContent(tab) {
+        var content = tab.querySelector(selectors.content);
+        var contentHeight = content.scrollHeight;
+        var previewHeight = tab.querySelector(selectors.preview).scrollHeight;
+    
+        $(content).animate({
+            height: contentHeight
+        }, duration);
+        $(tab).animate({
+            height:  previewHeight + contentHeight
+        }, duration);
+    }
+
+    function hideTabContent(tab) {
+        var content = tab.querySelector(selectors.content);
+        var previewHeight = tab.querySelector(selectors.preview).scrollHeight;
+
+        $(tab).animate({
+            height: previewHeight
+        }, duration, function() {
+            tab.style.height = 'auto';
         });
-
-        var tabs = document.querySelectorAll(selectors.tab);
-        for (let i = 0; i < tabs.length; i++) {
-            const tab = tabs[i];
-            tab.addEventListener('on', function() { showTabContent(tab) });
-            tab.addEventListener('off', function() { hideTabContent(tab) });
-            
-        }
-
-        function showTabContent(tab) {
-            console.log(tab);
-            var contentHeight = tab.querySelector(selectors.content).scrollHeight;
-            var previewHeight = tab.querySelector(selectors.preview).scrollHeight;
-        
-            $(tab.querySelector(selectors.content)).animate({
-                height: contentHeight
-            }, duration);
-            $(tab).animate({
-                height:  previewHeight + contentHeight
-            }, duration);
-        }
-
-        function hideTabContent() {
-            var contentHeight = tab.querySelector(selectors.content).scrollHeight;
-            var previewHeight = tab.querySelector(selectors.preview).scrollHeight;
-
-            $(tab).animate({
-                height: previewHeight
-            }, duration);
-            $(tab.querySelector(selectors.content)).animate({
-                height: 0}, duration
-            );
-        }
+        $(content).animate({
+            height: 0
+        }, duration
+        );
+    }
 }); 
