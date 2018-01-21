@@ -29,7 +29,7 @@ class ElementorAccordionGrid {
 
     public function enqueue_assets() {
         wp_enqueue_style('accordion_grid_styles', plugin_dir_url(__FILE__) . '/assets/css/accordion-grid-styles.css', array(), true, false);
-        wp_enqueue_script('accordion_grid_scripts', plugin_dir_url(__FILE__) . '/assets/js/accordion-grid.js', array('jquery'), true, true);
+        wp_enqueue_script('accordion_grid_scripts', plugin_dir_url(__FILE__) . '/assets/js/accordion-grid.js', array(), true, true);
     }
 
     public function widgets_registered() {
