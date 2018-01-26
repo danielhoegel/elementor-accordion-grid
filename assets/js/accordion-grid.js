@@ -14,19 +14,21 @@ document.addEventListener("DOMContentLoaded", function() {
     // SETUP TABS
     var initAccordionGrid = (function() {
         var tabs = document.querySelectorAll(selectors.tab);
-        var previewHeight = maxPreviewHeight(tabs[0]);
-        var tabHeight = getTabAutoHeight(tabs[0], previewHeight)
-
-        for (var i = 0; i < tabs.length; i++) {
-            var tab = tabs[i];
-            var tabPreview = tab.querySelector(selectors.preview);
-            
-            // set tab default size
-            tab.style.height = numToPx(tabHeight);
-            tabPreview.style.height = numToPx(previewHeight);
-            // add tab preview click event listener
-            tabPreview.addEventListener('click', tabClickHandler);
-            tabPreview.tab = tab;
+        if (tabs.length > 0) {
+            var previewHeight = maxPreviewHeight(tabs[0]);
+            var tabHeight = getTabAutoHeight(tabs[0], previewHeight)
+    
+            for (var i = 0; i < tabs.length; i++) {
+                var tab = tabs[i];
+                var tabPreview = tab.querySelector(selectors.preview);
+                
+                // set tab default size
+                tab.style.height = numToPx(tabHeight);
+                tabPreview.style.height = numToPx(previewHeight);
+                // add tab preview click event listener
+                tabPreview.addEventListener('click', tabClickHandler);
+                tabPreview.tab = tab;
+            }
         }
     })();
 
@@ -88,26 +90,28 @@ document.addEventListener("DOMContentLoaded", function() {
      */
     window.addEventListener('resize', function() {
         var tabs = document.querySelectorAll(selectors.tab);
-        var previewHeight = maxPreviewHeight(tabs[0]);
-        var tabHeight = getTabAutoHeight(tabs[0], previewHeight);
-
-        for (var i = 0; i < tabs.length; i++) {
-            var tab = tabs[i];
-
-            // tab preview height
-            // tab.querySelector(selectors.preview)
-            //    .style.height = numToPx(previewHeight);
-
-            if (tab.classList.contains('active')) {
-                var content = tab.querySelector(selectors.content);
-                var contentHeight = content.scrollHeight;
-            
-                // active tabs height
-                content.style.height = numToPx(contentHeight);
-                tab.style.height = numToPx(tabHeight + contentHeight);
-            } else {
-                // inactive tabs height
-               tab.style.height = numToPx(tabHeight);
+        if (tabs.length > 0) {
+            var previewHeight = maxPreviewHeight(tabs[0]);
+            var tabHeight = getTabAutoHeight(tabs[0], previewHeight);
+    
+            for (var i = 0; i < tabs.length; i++) {
+                var tab = tabs[i];
+    
+                // tab preview height
+                // tab.querySelector(selectors.preview)
+                //    .style.height = numToPx(previewHeight);
+    
+                if (tab.classList.contains('active')) {
+                    var content = tab.querySelector(selectors.content);
+                    var contentHeight = content.scrollHeight;
+                
+                    // active tabs height
+                    content.style.height = numToPx(contentHeight);
+                    tab.style.height = numToPx(tabHeight + contentHeight);
+                } else {
+                    // inactive tabs height
+                   tab.style.height = numToPx(tabHeight);
+                }
             }
         }
     })
