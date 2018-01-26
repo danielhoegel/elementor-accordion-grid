@@ -119,7 +119,7 @@ class Widget_Elementor_Accordion_Grid extends Widget_Base {
                             </div>
                         </div>
                     </div>
-                    <div class="accordion-grid__tab__content">
+                    <div class="accordion-grid__tab__content" style="height: 0px;">
                         <div class="accordion-grid__tab__content__inside">
                             <?= $item['tab_content'] ?>
                         </div>
