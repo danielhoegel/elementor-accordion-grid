@@ -23,14 +23,29 @@ class ElementorAccordionGrid {
    }
 
    public function init(){
-        add_action('elementor/widgets/widgets_registered', array($this, 'widgets_registered'));
-        add_action('wp_enqueue_scripts', array($this, 'enqueue_assets'));
+        add_action('elementor/widgets/widgets_registered', [$this, 'widgets_registered']);
+        add_action('wp_enqueue_scripts', [$this, 'enqueue_assets']);
+        add_action( 'elementor/controls/controls_registered', [$this, 'modify_icon_control'], 10, 1 );
     }
 
     public function enqueue_assets() {
-        wp_enqueue_style('accordion_grid_styles', plugin_dir_url(__FILE__) . '/assets/css/accordion-grid-styles.css', array(), true, false);
-        wp_enqueue_script('accordion_grid_scripts', plugin_dir_url(__FILE__) . '/assets/js/accordion-grid.js', array(), true, true);
+        wp_enqueue_style('accordion_grid_styles', plugin_dir_url(__FILE__) . '/assets/css/accordion-grid-styles.css', [], true, false);
+        wp_enqueue_script('accordion_grid_scripts', plugin_dir_url(__FILE__) . '/assets/js/accordion-grid.js', [], true, true);
+        wp_enqueue_style('custom_icon_font', plugin_dir_url(__FILE__) . '/assets/fonts/custom-icon-font/style.css');
     }
+
+    public function modify_icon_control( $controls_registry ) {
+        $icons = $controls_registry->get_control( 'icon' )->get_settings( 'options' );
+        $new_icons = [
+            'custom-icon custom-icon-diversity' => 'diversity',
+            'custom-icon custom-icon-diversity-o' => 'diversity-o',
+            'custom-icon custom-icon-diversity-circles' => 'diversity-circles',
+            'custom-icon custom-icon-link' => 'link'
+        ];
+        $combined_icons = array_merge($new_icons , $icons );
+        $controls_registry->get_control( 'icon' )->set_settings( 'options', $combined_icons );
+    }
+
 
     public function widgets_registered() {
 

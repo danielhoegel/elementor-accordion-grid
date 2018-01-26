@@ -7,27 +7,36 @@ document.addEventListener("DOMContentLoaded", function() {
         tab: tabSelector,
         activeTab: tabSelector + '.active',
         preview: tabSelector + '__preview',
+        previewInside: tabSelector + '__preview__inside',
         content: tabSelector + '__content'
     };
 
     // SETUP TABS
-    var tabPreviews = document.querySelectorAll(selectors.preview);
-    for (let i = 0; i < tabPreviews.length; i++) {
-        const tabPreview = tabPreviews[i];
-        const tab = tabPreview.parentNode;
-        
-        // set tab default size
-        tab.style.height = tab.scrollHeight + 'px';
-        // add tab preview click event listener
-        tabPreview.addEventListener('click', function() { tabClickHandler(tab) });
-    }
+    var initAccordionGrid = (function() {
+        var tabs = document.querySelectorAll(selectors.tab);
+        var previewHeight = maxPreviewHeight(tabs[0]);
+        var tabHeight = getTabAutoHeight(tabs[0], previewHeight)
+
+        for (var i = 0; i < tabs.length; i++) {
+            var tab = tabs[i];
+            var tabPreview = tab.querySelector(selectors.preview);
+            
+            // set tab default size
+            tab.style.height = numToPx(tabHeight);
+            tabPreview.style.height = numToPx(previewHeight);
+            // add tab preview click event listener
+            tabPreview.addEventListener('click', tabClickHandler);
+            tabPreview.tab = tab;
+        }
+    })();
 
 
     /**
      * Delegate the click event
-     * @param {element} tab - clicked accordion-grid__item
+     * @param {element} tab - clicked accordion-grid__tab
      */
-    function tabClickHandler(tab) {
+    function tabClickHandler() {
+        var tab = this.tab;
         if (tab.classList.contains('active')) {
             hideTabContent(tab);
             
@@ -40,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     /**
      * Show the content of the clicked tab
-     * @param {element} tab - clicked accordion-grid__item
+     * @param {element} tab - clicked accordion-grid__tab
      */
     function showTabContent(tab) {
         if (tab) {
@@ -48,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             var content = tab.querySelector(selectors.content);
             var contentHeight = content.scrollHeight;
-            var previewHeight = tab.querySelector(selectors.preview).scrollHeight;
+            var previewHeight = maxPreviewHeight(tab);
             
             content.style.height = numToPx(contentHeight);
             tab.style.height = numToPx(previewHeight + contentHeight);
@@ -57,19 +66,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     /**
-     * Hie the content of the clicked tab
-     * @param {element} tab - clicked accordion-grid__item
+     * Hide the content of the clicked tab
+     * @param {element} tab - clicked accordion-grid__tab
      */
     function hideTabContent(tab) {
         if (tab) {
+            // reset tab height and class
             tab.classList.remove('active');
-
-            var content = tab.querySelector(selectors.content);
-            var previewHeight = tab.querySelector(selectors.preview).scrollHeight;
-            var tabPadding = window.getComputedStyle(tab).getPropertyValue('padding-bottom').split('px')[0];
+            tab.style.height = numToPx(getTabAutoHeight(tab));
             
+            // set content height to 0
+            var content = tab.querySelector(selectors.content);
             content.style.height = 0;
-            tab.style.height = numToPx(previewHeight + 2 * tabPadding);
+            
         }
     }
 
@@ -78,25 +87,61 @@ document.addEventListener("DOMContentLoaded", function() {
      * Adjust heights on window resize
      */
     window.addEventListener('resize', function() {
-        console.log('resize');
-
         var tabs = document.querySelectorAll(selectors.tab);
-        for (let i = 0; i < tabs.length; i++) {
-            const tab = tabs[i];
+        var previewHeight = maxPreviewHeight(tabs[0]);
+        var tabHeight = getTabAutoHeight(tabs[0], previewHeight);
+
+        for (var i = 0; i < tabs.length; i++) {
+            var tab = tabs[i];
+
+            // tab preview height
+            // tab.querySelector(selectors.preview)
+            //    .style.height = numToPx(previewHeight);
+
             if (tab.classList.contains('active')) {
                 var content = tab.querySelector(selectors.content);
                 var contentHeight = content.scrollHeight;
-                var previewHeight = tab.querySelector(selectors.preview).scrollHeight;
-                
-                // adjust active tabs height
+            
+                // active tabs height
                 content.style.height = numToPx(contentHeight);
-                tab.style.height = numToPx(previewHeight + contentHeight);
+                tab.style.height = numToPx(tabHeight + contentHeight);
             } else {
-                // adjust inactive tabs height
-                tab.style.height = tab.scrollHeight + 'px';
+                // inactive tabs height
+               tab.style.height = numToPx(tabHeight);
             }
         }
     })
+
+
+    /**
+     * Get default/auto height of the tab
+     * @param {element} tab - target to get the padding
+     */
+    function getTabAutoHeight(tab, previewHeight) {
+        var compStyle = window.getComputedStyle(tab);
+        var paddingTop = parseInt(compStyle.getPropertyValue('padding-top').split('px')[0]);
+        var paddingBottom = parseInt(compStyle.getPropertyValue('padding-bottom').split('px')[0]);
+        var previewHeight = previewHeight ? previewHeight : maxPreviewHeight(tab);
+
+        return previewHeight + paddingTop + paddingBottom;
+    }
+
+
+    /**
+     * Get default/auto height of the tab
+     * @param {element} tab - target to get the parent accordion grid
+     */
+    function maxPreviewHeight(tab) {
+        var maxPreviewHeight = 0;
+        var allTabs = tab.parentNode.querySelectorAll(selectors.tab);
+        for(var i = 0; i < allTabs.length; i++) {
+            var previewHeight = allTabs[i].querySelector(selectors.previewInside).scrollHeight; // clientHeight ignores :after
+            if (previewHeight > maxPreviewHeight) {
+                maxPreviewHeight = previewHeight;
+            }
+        };
+        return maxPreviewHeight;
+    }
 
 
     /**
