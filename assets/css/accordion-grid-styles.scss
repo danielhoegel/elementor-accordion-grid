@@ -14,16 +14,63 @@
     position: relative;
     margin: -1 * $gap;
 
+    // columns
+    &__columns--one {
+        $columns: 1;
+        .accordion-grid__tab {
+            width: calc(100% / #{$columns});
+            @media(max-width: 768px) { width: calc(100% / #{ceil($columns / 2)}); }
+            @media(max-width: 560px) { width: calc(100% / #{floor($columns / 3)}); }
+        }
+    }
+    &__columns--two {
+        $columns: 2;
+        .accordion-grid__tab {
+            width: calc(100% / #{$columns});
+            @media(max-width: 768px) { width: calc(100% / #{ceil($columns / 2)}); }
+            @media(max-width: 560px) { width: calc(100% / #{floor($columns / 3)}); }
+        }
+    }
+    &__columns--three {
+        $columns: 3;
+        .accordion-grid__tab {
+            width: calc(100% / #{$columns});
+            @media(max-width: 768px) { width: calc(100% / #{ceil($columns / 2)}); }
+            @media(max-width: 560px) { width: calc(100% / #{floor($columns / 3)}); }
+        }
+    }
+    &__columns--four {
+        $columns: 4;
+        .accordion-grid__tab {
+            width: calc(100% / #{$columns});
+            @media(max-width: 768px) { width: calc(100% / #{ceil($columns / 2)}); }
+            @media(max-width: 560px) { width: calc(100% / #{floor($columns / 3)}); }
+        }
+    }
+    &__columns--five {
+        $columns: 5;
+        .accordion-grid__tab {
+            width: calc(100% / #{$columns});
+            @media(max-width: 768px) { width: calc(100% / #{ceil($columns / 2)}); }
+            @media(max-width: 560px) { width: calc(100% / #{floor($columns / 3)}); }
+        }
+    }
+    &__columns--six {
+        $columns: 6;
+        .accordion-grid__tab {
+            width: calc(100% / #{$columns});
+            @media(max-width: 768px) { width: calc(100% / #{ceil($columns / 2)}); }
+            @media(max-width: 560px) { width: calc(100% / #{floor($columns / 3)}); }
+        }
+    }
+
+
     &__tab {    
         margin: 0;
         padding: $gap;
         overflow: hidden;
         transition: $duration all ease;
         width: 100%;
-        width: calc(100% / #{$columns});
-
-        @media(max-width: 768px) { width: calc(100% / #{ceil($columns / 2)}); }
-        @media(max-width: 560px) { width: calc(100% / #{floor($columns / 3)}); }
 
         &__preview {
             &__inside {
@@ -61,6 +108,41 @@
                 .accordion-grid__tab.active & {
                     color: $accent;
                     &:after { display: block; }
+                }
+
+                // background image
+                &--bg-image {
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    background-position: center center;
+                    color: #fff;
+                    min-height: 200px;
+                    
+                    & > * { position: relative; }
+
+                    &:before {
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        top: 0; left: 0; bottom: 0; right: 0;
+                        width: 100%; height: 100%;
+                        background-color: #000;
+                        opacity: 0.5;
+                        z-index: 0;
+                        transition: opacity 0.2s ease-in-out;
+                    }
+
+                    &:hover,
+                    .accordion-grid__tab.active & {
+                        color: #fff;
+                        &:before { opacity: 0.35; }
+                    }
+
+                    .accordion-grid__tab__title {
+                        font-size: 1.5rem;
+                        text-transform: uppercase;
+                        font-weight: normal;
+                    }
                 }
             }
         }
