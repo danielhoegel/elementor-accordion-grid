@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var duration = 400;
     var tabSelector = '.accordion-grid__tab';
     var selectors = {
+        grid: '.accordion-grid',
         tab: tabSelector,
         activeTab: tabSelector + '.active',
         preview: tabSelector + '__preview',
@@ -11,26 +12,49 @@ document.addEventListener("DOMContentLoaded", function() {
         content: tabSelector + '__content'
     };
 
-    // SETUP TABS
+    // SETUP GRIDS
     var initAccordionGrid = (function() {
-        var tabs = document.querySelectorAll(selectors.tab);
-        if (tabs.length > 0) {
-            var previewHeight = maxPreviewHeight(tabs[0]);
-            var tabHeight = getTabAutoHeight(tabs[0], previewHeight)
-    
-            for (var i = 0; i < tabs.length; i++) {
-                var tab = tabs[i];
-                var tabPreview = tab.querySelector(selectors.preview);
-                
-                // set tab default size
-                tab.style.height = numToPx(tabHeight);
-                tabPreview.style.height = numToPx(previewHeight);
-                // add tab preview click event listener
-                tabPreview.addEventListener('click', tabClickHandler);
-                tabPreview.tab = tab;
+        var grids = document.querySelectorAll(selectors.grid);
+        if (grids.length > 0) {
+            for (var i = 0; i < grids.length; i++) {
+                setupGrid(grids[i]);  
             }
         }
     })();
+
+
+    /**
+     * Setup a grid
+     * @param {element} grid 
+     */
+    function setupGrid(grid) {
+        var tabs = grid.children;
+        if (tabs.length > 0) {
+            var previewHeight = maxPreviewHeight(tabs[0]);
+            var tabHeight = getTabAutoHeight(tabs[0], previewHeight);
+            
+            for (var i = 0; i < tabs.length; i++) {
+                setupTab(tabs[i], previewHeight, tabHeight)
+            }
+        }
+    }
+
+
+    /**
+     * Setup a tab
+     * @param {element} tab
+     * @param {number} previewHeight 
+     * @param {number} tabHeight 
+     */
+    function setupTab(tab, previewHeight, tabHeight) {
+        var tabPreview = tab.querySelector(selectors.preview);
+        // set tab default size
+        tab.style.height = numToPx(tabHeight);
+        tabPreview.style.height = numToPx(previewHeight);
+        // add tab preview click event listener
+        tabPreview.addEventListener('click', tabClickHandler);
+        tabPreview.tab = tab;
+    }
 
 
     /**
@@ -89,28 +113,33 @@ document.addEventListener("DOMContentLoaded", function() {
      * Adjust heights on window resize
      */
     window.addEventListener('resize', function() {
-        var tabs = document.querySelectorAll(selectors.tab);
-        if (tabs.length > 0) {
-            var previewHeight = maxPreviewHeight(tabs[0]);
-            var tabHeight = getTabAutoHeight(tabs[0], previewHeight);
-    
-            for (var i = 0; i < tabs.length; i++) {
-                var tab = tabs[i];
-    
-                // tab preview height
-                // tab.querySelector(selectors.preview)
-                //    .style.height = numToPx(previewHeight);
-    
-                if (tab.classList.contains('active')) {
-                    var content = tab.querySelector(selectors.content);
-                    var contentHeight = content.scrollHeight;
-                
-                    // active tabs height
-                    content.style.height = numToPx(contentHeight);
-                    tab.style.height = numToPx(tabHeight + contentHeight);
-                } else {
-                    // inactive tabs height
-                   tab.style.height = numToPx(tabHeight);
+        var grids = document.querySelectorAll(selectors.grid);
+        if (grids.length > 0) {
+            for (var i = 0; i < grids.length; i++) {
+                var tabs = grids[i].querySelectorAll(selectors.tab);
+                if (tabs.length > 0) {
+                    var previewHeight = maxPreviewHeight(tabs[0]);
+                    var tabHeight = getTabAutoHeight(tabs[0], previewHeight);
+            
+                    for (var j = 0; j < tabs.length; j++) {
+                        var tab = tabs[j];
+            
+                        // tab preview height
+                        // tab.querySelector(selectors.preview)
+                        //    .style.height = numToPx(previewHeight);
+            
+                        if (tab.classList.contains('active')) {
+                            var content = tab.querySelector(selectors.content);
+                            var contentHeight = content.scrollHeight;
+                        
+                            // active tabs height
+                            content.style.height = numToPx(contentHeight);
+                            tab.style.height = numToPx(tabHeight + contentHeight);
+                        } else {
+                            // inactive tabs height
+                        tab.style.height = numToPx(tabHeight);
+                        }
+                    }
                 }
             }
         }
