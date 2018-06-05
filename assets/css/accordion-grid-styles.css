@@ -5,7 +5,7 @@
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   position: relative;
-  margin: -0.5rem;
+  margin: -1rem;
 }
 
 .accordion-grid, .accordion-grid * {
@@ -111,7 +111,7 @@
 
 .accordion-grid__tab {
   margin: 0;
-  padding: 0.5rem;
+  padding: 1rem;
   overflow: hidden;
   -webkit-transition: 400ms all ease;
   transition: 400ms all ease;
@@ -134,8 +134,8 @@
   color: #004064;
   padding: 2rem;
   text-align: center;
-  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   position: relative;
   -webkit-user-select: none;
@@ -144,6 +144,7 @@
           user-select: none;
   -webkit-transition: color 0.1s ease;
   transition: color 0.1s ease;
+  border-radius: 4px;
 }
 
 .accordion-grid__tab__preview__inside:after {
@@ -151,10 +152,10 @@
   display: none;
   width: 0;
   height: 0;
-  border: 0.75rem solid transparent;
+  border: 1rem solid transparent;
   border-bottom-color: #839750;
   position: absolute;
-  bottom: -1.5rem;
+  bottom: -2rem;
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
@@ -234,10 +235,11 @@
 .accordion-grid__tab__content__inside {
   background-color: #fff;
   padding: 1rem;
-  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin: 1.5rem 0.5rem 0.5rem;
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  margin: 2rem 1rem 4px;
   border-top: 2px solid #839750;
+  border-radius: 4px;
 }
 
 .accordion-grid__tab__icon {

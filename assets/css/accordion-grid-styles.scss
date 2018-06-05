@@ -1,5 +1,5 @@
 .accordion-grid {
-    $gap: 0.5rem;
+    $gap: 1rem;
     $duration: 400ms;
     $columns: 4;
     $primary: #004064;
@@ -82,21 +82,22 @@
                 color: $primary;
                 padding: 2rem;
                 text-align: center;
-                box-shadow: 0 2px 4px rgba(#000, 0.1);
+                box-shadow: 0 2px 4px rgba(#000, 0.15);
                 cursor: pointer;
                 position: relative;
                 user-select: none;
                 transition: color 0.1s ease;
+                border-radius: 4px;
 
                 &:after {
                     content: '';
                     display: none;
                     width: 0;
                     height: 0;
-                    border: (1.5 * $gap) solid transparent;
+                    border: $gap solid transparent;
                     border-bottom-color: $accent;
                     position: absolute;
-                    bottom: -3 * $gap;
+                    bottom: -2 * $gap;
                     left: 50%;
                     transform: translateX(-50%);
                 }
@@ -162,9 +163,10 @@
             &__inside {
                 background-color: #fff;
                 padding: 1rem;
-                box-shadow: 0 2px 4px rgba(#000, 0.1);
-                margin: (3 * $gap) $gap $gap;
+                box-shadow: 0 2px 4px rgba(#000, 0.15);
+                margin: (2 * $gap) $gap 4px;
                 border-top: 2px solid $accent;
+                border-radius: 4px;
             }
         }
 
