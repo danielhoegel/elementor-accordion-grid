@@ -2,14 +2,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // CONFIG
     var duration = 400;
-    var tabSelector = '.accordion-grid__tab';
     var selectors = {
         grid: '.accordion-grid',
-        tab: tabSelector,
-        activeTab: tabSelector + '.active',
-        preview: tabSelector + '__preview',
-        previewInside: tabSelector + '__preview__inside',
-        content: tabSelector + '__content'
+        tab: '.accordion-grid__tab',
+        activeTab: '.accordion-grid__tab.active',
+        preview: '.accordion-grid__tab__preview',
+        previewInside: '.accordion-grid__tab__preview__inside',
+        content: '.accordion-grid__tab__content'
     };
 
     // SETUP GRIDS
